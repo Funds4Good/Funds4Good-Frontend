@@ -25,7 +25,7 @@ const Story = () => {
     ]
 
     return (
-        <div className="bg-white shadow-lg rounded-lg p-4 mb-6">
+        <div className="bg-white shadow-lg rounded-lg p-4">
             {storyItems.map((item) =>
                 <>
                     <p className=" text-lg mb-2 text-[#4F46E5]">{item.name}</p>
