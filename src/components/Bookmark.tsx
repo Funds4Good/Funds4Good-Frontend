@@ -45,13 +45,10 @@ const Bookmark = () => {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.json(); 
+                    setPosts(response.data); 
                 } else {
                     throw new Error("Failed to fetch bookmarks");
                 }
-            })
-            .then((data) => {
-                setPosts(data); 
             })
             .catch((error) => {
                 console.error("Error:", error);
