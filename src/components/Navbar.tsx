@@ -1,6 +1,7 @@
 import { Bookmark, HandCoins, Home, LogOut, Plus, User, Wallet } from "lucide-react";
 import Image from "next/image";
 import classNames from "classnames";
+import Link from "next/link";
 
 interface Props {
   page: string
@@ -56,10 +57,10 @@ export default function Navbar({page} : Props) {
       </div>
       <div className="flex flex-col gap-2 mx-4">
         {navItems.map((item) =>
-          <div className={`${buttonClasses(item.name)} flex gap-4 w-9/10 cursor-pointer text-black/60 hover:bg-[#D9D9D999]/60 hover:text-black p-4 rounded-xl`}>
+          <Link href={`/${item.name=="Home"?"":(item.name).toLowerCase()}`} className={`${buttonClasses(item.name)} flex gap-4 w-9/10 cursor-pointer text-black/60 hover:bg-[#D9D9D999]/60 hover:text-black p-4 rounded-xl`}>
             <div>{item.icon}</div>
             <p>{item.name}</p>
-          </div>
+          </Link>
         )}
       </div>
     </div>

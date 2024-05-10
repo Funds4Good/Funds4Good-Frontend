@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/Button";
 import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
-import axios from 'axios'
 import BaseUrl from "@/BaseUrl";
 export default function SignIn() {
 
