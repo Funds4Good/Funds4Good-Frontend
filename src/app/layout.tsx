@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Funds4Good",
-  description: "Empowering Dreams, Enriching Lives By removing Economic inequalities.",
+  description: "Empowering Dreams, Enriching Lives By Removing Economic Inequalities.",
 };
 
 export default function RootLayout({
