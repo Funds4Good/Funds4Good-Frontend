@@ -1,4 +1,4 @@
-import { Bookmark, Home } from "lucide-react";
+import { Bookmark, HandCoins, Home, LogOut, Plus, User, Wallet } from "lucide-react";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -9,9 +9,29 @@ export default function Navbar() {
       name: "Home"
     },
     {
+      icon: <Plus />,
+      name: "Apply"
+    },
+    {
+      icon: <HandCoins />,
+      name: "Applications"
+    },
+    {
       icon: <Bookmark />,
       name: "Bookmarks"
-    }
+    },
+    {
+      icon: <User />,
+      name: "Profile"
+    },
+    {
+      icon: <Wallet />,
+      name: "Wallet"
+    },
+    {
+      icon: <LogOut />,
+      name: "Log Out"
+    },
   ]
 
   return (
@@ -23,7 +43,7 @@ export default function Navbar() {
       <div className="flex flex-col gap-2 mx-4">
         {navItems.map((item) =>
           <div className="flex gap-4 w-9/10 cursor-pointer text-black/60 hover:bg-[#4F46E5] hover:text-white p-4 rounded-xl">
-            {item.icon}
+            <div>{item.icon}</div>
             <p>{item.name}</p>
           </div>
         )}
