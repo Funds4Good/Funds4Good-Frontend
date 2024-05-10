@@ -4,12 +4,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -19,5 +16,9 @@ body {
 
   .box-shadow {
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .bg-signup {
+    background-image: url("/signup.png");
   }
 }
