@@ -3,7 +3,7 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
 import classNames from "classnames";
-import { ArrowRight, ArrowUp } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 import { useState } from "react";
 
 export default function Appply() {
@@ -103,9 +103,16 @@ export default function Appply() {
                         <textarea className="rounded-md border-2 border-[#D9D9D9] w-1/2 h-[25vh] resize-none p-2" />
                     </div>
                     <div className="w-full pr-12">
+                        <Button onClick={() => setCurrentStep(1)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white" > <ArrowLeft /> Back </Button>
                         <Button onClick={() => setCurrentStep(3)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right" > Next <ArrowRight /></Button>
                     </div>
                 </div>}
+                {currentStep==3 && <div>
+                    <div className="w-full pr-12">
+                        <Button onClick={() => setCurrentStep(2)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white" > <ArrowLeft /> Back </Button>
+                        {/* <Button onClick={() => setCurrentStep(3)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right" > Next <ArrowRight /></Button> */}
+                    </div>
+                    </div>}
             </div>
         </div>
     );

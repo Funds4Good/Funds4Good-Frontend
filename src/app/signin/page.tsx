@@ -5,11 +5,15 @@ import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import BaseUrl from "@/lib/BaseUrl";
 import Link from "next/link";
-export default function SignIn() {
+import { useRouter } from "next/navigation";
 
+export default function SignIn() {
+    
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
     function handleSubmit() {
         if (email && password) {
             setLoading(true);
@@ -18,11 +22,16 @@ export default function SignIn() {
                 password: password
             })
             .then((res)=>{
-                setLoading(true);
-                console.log(res)
+                setLoading(false);
+                const token = res.data.accessToken
+                if(res.status == 200){
+                    localStorage.setItem("accessToken" , token);
+                    localStorage.setItem("name" , res.data.name);
+                    router.push("/")
+                }
             })
             .catch((err)=>{
-                setLoading(true);
+                setLoading(false);
                 console.log(err)
             })
         }
@@ -48,7 +57,10 @@ export default function SignIn() {
                             </div>
                             <div className="flex mx-auto items-center w-full justify-center">
                                 <div className="p-4 bg-[#F4F8F5] text-[#9A9A9A]"><Lock /></div>
-                                <input onChange={(e) => setPassword(e.target.value)} className="p-4 bg-[#F4F8F5] outline-none w-1/2" placeholder="Password" />
+                                <input type="password" onChange={(e) => setPassword(e.target.value)} className="p-4 bg-[#F4F8F5] outline-none w-1/2" placeholder="Password" />
+                            </div>
+                            <div className="flex mx-auto items-center w-full justify-center">
+                                <p className="text-[#4F46E5] w-2/3 text-right">Forgot Password?</p>
                             </div>
                             <Button onClick={handleSubmit} className="bg-[#5047E5] text-white w-1/2 p-4 mx-auto rounded-full">Sign In</Button>
                         </div>

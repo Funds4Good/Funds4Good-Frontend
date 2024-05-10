@@ -4,6 +4,8 @@ import BaseUrl from "@/lib/BaseUrl";
 import { Button } from "@/components/ui/Button";
 import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
     const [name, setName] = useState<string>("");
@@ -11,9 +13,10 @@ export default function SignUp() {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     function handleSubmit() {
-        if (email && password && name) {
+        if (email && password && name && (password==confirmPassword)) {
             setLoading(true);
             BaseUrl.post("/api/auth/signup", {
                 name: name,
@@ -22,7 +25,12 @@ export default function SignUp() {
             })
             .then((res)=>{
                 setLoading(true);
-                console.log(res)
+                const token = res.data.accessToken
+                if(res.status == 200){
+                    localStorage.setItem("accessToken" , token);
+                    localStorage.setItem("name" , res.data.name);
+                    router.push("/")
+                }
             })
             .catch((err)=>{
                 setLoading(true);
@@ -38,7 +46,9 @@ export default function SignUp() {
                     <div className="col-span-4 bg-signup bg-[#4F46E5] h-[75vh] w-full rounded-l-xl py-44 px-16 flex flex-col gap-12 text-white text-center">
                         <p className="text-3xl font-extrabold">Welcome Back!</p>
                         <p className="font-thin">To keep connected with us plase login with your personal info</p>
-                        <Button className="text-white w-1/2 p-4 mx-auto rounded-full border-2 border-white">Sign In</Button>
+                        <Link href={"/signin"}>
+                            <Button className="text-white w-1/2 p-4 mx-auto rounded-full border-2 border-white">Sign In</Button>
+                        </Link>
                     </div>
                     <div className="col-span-6 p-24">
                         <p className="text-3xl font-extrabold text-[#4F46E5] text-center">Create Account</p>

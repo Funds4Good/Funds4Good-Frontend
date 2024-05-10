@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import postImg from '../../public/post.svg';
 import ProgressBar from './ProgressBar';
@@ -14,14 +14,18 @@ const Post = () => {
     ];
 
     const [progress, setProgress] = useState(50);
-   
+    const [name, setName] = useState<string | null>(null);
 
+  useEffect(() => {
+    const name = localStorage.getItem("name")
+      setName(name);
+  }, [name]);
     return (
         <div className="flex flex-col items-start justify-around gap-8 p-8">
-            <p className="text-2xl text-[#4F46E5]">Welcome Taru!</p>
+            <p className="text-[#4F46E5] text-3xl">Welcome {((name?.charAt(0)?.toUpperCase() || "") + name?.slice(1))}!</p>
             <div className="flex items-start justify-between gap-6">
                 {navItems.map((item, index) => (
-                    <button key={index} className="rounded-full px-4 py-2 text-black hover:bg-[#4F46E5] hover:text-white">{item.name}</button>
+                    <button key={index} className="rounded-full px-4 py-2 text-black border-2 border-gray-300 hover:bg-[#4F46E5] hover:text-white">{item.name}</button>
                 ))}
             </div>
             <div className="bg-white border border-gray-200 rounded-lg w-full shadow-md p-4 mb-4 flex flex-col justify-between">
@@ -31,7 +35,7 @@ const Post = () => {
                         alt="Profile"
                         className="w-8 h-8 rounded-full mr-2"
                     />
-                    <span className="text-black">Taru Pathak</span>
+                    <span className="text-black">name</span>
                 </div>
                 <p className="text-gray-800 mb-4">I need loan for my operation</p>
                 <Image src={postImg} alt="Post" className="w-full mb-4 rounded-lg" />
