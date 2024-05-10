@@ -8,7 +8,7 @@ import ProgressBar from './ProgressBar';
 const Bookmark = () => {
     const [progress, setProgress] = useState(50);
     return (
-        <div className="flex flex-col items-start justify-around gap-8 p-8 "><div className="text-[#4F46E5] text-lg ">Bookmark</div>
+        <div className="flex flex-col items-start justify-around gap-8 p-8 "><div className="text-[#4F46E5] text-3xl">Bookmark</div>
             <div className="bg-white border border-gray-200 rounded-lg w-full shadow-md p-4 mb-4 flex flex-col justify-between">
                 <div className="flex items-center mb-4">
                     <Image
