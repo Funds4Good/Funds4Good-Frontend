@@ -4,7 +4,8 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
 import classNames from "classnames";
 import { ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
-import { useState } from "react";
+import Image from "next/image";
+import { ChangeEvent, useState } from "react";
 
 // Define the type for form data
 type FormData = {
@@ -24,7 +25,14 @@ type FormData = {
 
 export default function Apply() {
     const [currentStep, setCurrentStep] = useState(1);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
+    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setSelectedImage(file);
+        }
+    };
     // State object to hold values of all fields
     const [formData, setFormData] = useState<FormData>({
         fullName: "",
@@ -162,9 +170,13 @@ export default function Apply() {
                         </div>
                         <div>
                             <p className="text-black/60 mb-4">Upload Supporting Document</p>
-                            <Button className="rounded-md bg-[#4F46E5] w-1/4 p-2 text-white" >
-                                <ArrowUp /> Upload
-                            </Button>
+                            <div className="relative flex items-center">
+                                <input onChange={handleImageChange} id="file-upload" type="file" className="z-10 absolute opacity-0 cursor-pointer" accept=".jpg, .jpeg, .png" />
+                                <button className="rounded-md bg-[#4F46E5] w-1/5 p-2 text-white cursor-pointer flex justify-center items-center" >
+                                    <ArrowUp /><p>Upload</p>
+                                </button>
+                            </div>
+                            {selectedImage && <Image width={400} height={400} src={URL.createObjectURL(selectedImage)} alt="document" />}
                         </div>
                         <div className="w-full pr-12">
                             <Button onClick={() => handleNextStep(2)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right">
@@ -319,9 +331,9 @@ export default function Apply() {
                             </div>
                             <div>
                                 <p className="text-black/60 mb-4">Upload Supporting Document</p>
-                                <Button className="rounded-md bg-[#4F46E5] w-1/4 p-2 text-white" >
+                                <div className="rounded-md bg-[#4F46E5] w-1/4 p-2 text-white" >
                                     <ArrowUp /> Upload
-                                </Button>
+                                </div>
                             </div>
                         </div>
                         <div className="flex flex-col gap-4">
