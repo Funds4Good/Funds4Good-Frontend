@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/Button";
+import BaseUrl from "@/lib/BaseUrl";
 import classNames from "classnames";
 import { ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 import Image from "next/image";
@@ -9,18 +10,20 @@ import { ChangeEvent, useState } from "react";
 
 // Define the type for form data
 type FormData = {
-    fullName: string;
-    zipCode: string;
+    name: string;
+    zipcode: string;
     bio: string;
-    annualIncome: string;
+    income: string;
     occupation: string;
-    idDetails: string;
+    idNumber: string;
     loanAmount: string;
     loanCategory: string;
     loanDuration: string;
+    loanDurationUnit: string;
     repaymentStartDate: string;
     emiRepetition: string;
     loanPurpose: string;
+    idDetails: string
 }
 
 export default function Apply() {
@@ -35,18 +38,20 @@ export default function Apply() {
     };
     // State object to hold values of all fields
     const [formData, setFormData] = useState<FormData>({
-        fullName: "",
-        zipCode: "",
+        name: "",
+        zipcode: "",
         bio: "",
-        annualIncome: "",
+        income: "",
         occupation: "",
-        idDetails: "",
+        idNumber: "",
         loanAmount: "",
         loanCategory: "",
         loanDuration: "",
+        loanDurationUnit: "",
         repaymentStartDate: "",
         emiRepetition: "",
-        loanPurpose: ""
+        loanPurpose: "",
+        idDetails: "Adhaar"
     });
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -65,12 +70,10 @@ export default function Apply() {
         });
     }
 
-    // Render value in each element
     function renderValue(name: keyof FormData) {
         return formData[name];
     }
 
-    // Function to update the current step
     function handleNextStep(step: number) {
         setCurrentStep(step);
     }
@@ -92,6 +95,33 @@ export default function Apply() {
             },
         );
     }
+
+    function handleSubmit() {
+        var accesstoken = localStorage.getItem("accesstoken");
+        const config = {
+            headers: {
+                Authorization: `Bearer ${accesstoken}`,
+            },
+        };
+
+        const formDataJson = JSON.stringify(formData);
+
+        const object = new FormData();
+        object.append("loanRequest", formDataJson);
+
+        if (selectedImage !== null) {
+            object.append("image", selectedImage);
+        }
+
+        BaseUrl.post("api/loans/apply", object, config)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
 
     return (
         <div className="grid grid-cols-12">
@@ -115,8 +145,8 @@ export default function Apply() {
                                 <p className="text-black/60">Full Name</p>
                                 <input
                                     className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                    name="fullName"
-                                    value={renderValue("fullName")}
+                                    name="name"
+                                    value={renderValue("name")}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -124,8 +154,9 @@ export default function Apply() {
                                 <p className="text-black/60">Zip Code</p>
                                 <input
                                     className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                    name="zipCode"
-                                    value={renderValue("zipCode")}
+                                    name="zipcode"
+                                    type="number"
+                                    value={renderValue("zipcode")}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -137,6 +168,7 @@ export default function Apply() {
                                 name="bio"
                                 value={renderValue("bio")}
                                 onChange={handleInputChange}
+                                maxLength={500}
                             />
                         </div>
                         <div className="grid grid-cols-2">
@@ -144,9 +176,10 @@ export default function Apply() {
                                 <p className="text-black/60">Annual Income (per annum)</p>
                                 <input
                                     className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                    name="annualIncome"
-                                    value={renderValue("annualIncome")}
+                                    name="income"
+                                    value={renderValue("income")}
                                     onChange={handleInputChange}
+                                    type="number"
                                 />
                             </div>
                             <div>
@@ -156,17 +189,32 @@ export default function Apply() {
                                     name="occupation"
                                     value={renderValue("occupation")}
                                     onChange={handleInputChange}
+                                    maxLength={50}
                                 />
                             </div>
                         </div>
-                        <div>
-                            <p className="text-black/60">ID Details</p>
-                            <input
-                                className="rounded-md border-2 border-[#D9D9D9] w-1/4 p-2"
-                                name="idDetails"
-                                value={renderValue("idDetails")}
-                                onChange={handleInputChange}
-                            />
+                        <div className="grid grid-cols-2">
+                            <div className="w-full">
+                                <p className="text-black/60">ID Details</p>
+                                <input
+                                    className="rounded-md border-2 border-[#D9D9D9] w-1/4 p-2"
+                                    name="idNumber"
+                                    value={renderValue("idNumber")}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="w-full">
+                                <p className="text-black/60">ID Category</p>
+                                <select
+                                    className="rounded-md border-2 border-[#D9D9D9] p-2 ml-2"
+                                    name="idDetails"
+                                    onChange={handleSelectChange}
+                                >
+                                    <option>Adhaar</option>
+                                    <option>PAN</option>
+                                    <option>Passport</option>
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <p className="text-black/60 mb-4">Upload Supporting Document</p>
@@ -178,11 +226,11 @@ export default function Apply() {
                             </div>
                             {selectedImage && <Image width={400} height={400} src={URL.createObjectURL(selectedImage)} alt="document" />}
                         </div>
-                        <div className="w-full pr-12">
+                        {(selectedImage && formData.name && formData.bio && formData.idDetails && formData.idNumber && formData.zipcode && formData.occupation) && <div className="w-full pr-12">
                             <Button onClick={() => handleNextStep(2)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right">
                                 Next <ArrowRight />
                             </Button>
-                        </div>
+                        </div>}
                     </div>
                 )}
                 {currentStep === 2 && (
@@ -193,19 +241,23 @@ export default function Apply() {
                                 <p className="text-black/60">Loan Amount Needed</p>
                                 <input
                                     className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                    name="loanAmount"
                                     value={renderValue("loanAmount")}
+                                    name="loanAmount"
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div>
                                 <p className="text-black/60">Loan Category</p>
-                                <input
-                                    className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
+                                <select
+                                    className="rounded-md border-2 border-[#D9D9D9] p-2 ml-2"
                                     name="loanCategory"
-                                    value={renderValue("loanCategory")}
-                                    onChange={handleInputChange}
-                                />
+                                    onChange={handleSelectChange}
+                                >
+                                    <option>StartUp</option>
+                                    <option>Women and Children</option>
+                                    <option>Medical Expenses</option>
+                                    <option>Potential Borrowers</option>
+                                </select>
                             </div>
                         </div>
                         <div className="grid grid-cols-2">
@@ -266,9 +318,10 @@ export default function Apply() {
                             <Button onClick={() => handleNextStep(1)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white">
                                 <ArrowLeft /> Back
                             </Button>
-                            <Button onClick={() => handleNextStep(3)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right">
-                                Next <ArrowRight />
-                            </Button>
+                            {(formData.loanAmount && formData.loanCategory && formData.loanDuration && formData.loanPurpose && formData.repaymentStartDate && formData.emiRepetition) &&
+                                <Button onClick={() => handleNextStep(3)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right">
+                                    Next <ArrowRight />
+                                </Button>}
                         </div>
                     </div>
                 )}
@@ -283,7 +336,7 @@ export default function Apply() {
                                     <input
                                         disabled
                                         className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                        value={renderValue("fullName")}
+                                        value={renderValue("name")}
                                     />
                                 </div>
                                 <div>
@@ -291,7 +344,7 @@ export default function Apply() {
                                     <input
                                         disabled
                                         className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                        value={renderValue("zipCode")}
+                                        value={renderValue("zipcode")}
                                     />
                                 </div>
                             </div>
@@ -309,7 +362,7 @@ export default function Apply() {
                                     <input
                                         disabled
                                         className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                        value={renderValue("annualIncome")}
+                                        value={renderValue("income")}
                                     />
                                 </div>
                                 <div>
@@ -326,14 +379,12 @@ export default function Apply() {
                                 <input
                                     disabled
                                     className="rounded-md border-2 border-[#D9D9D9] w-1/4 p-2"
-                                    value={renderValue("idDetails")}
+                                    value={renderValue("idNumber")}
                                 />
                             </div>
                             <div>
-                                <p className="text-black/60 mb-4">Upload Supporting Document</p>
-                                <div className="rounded-md bg-[#4F46E5] w-1/4 p-2 text-white" >
-                                    <ArrowUp /> Upload
-                                </div>
+                                <p className="text-black/60 mb-4">Supporting Document</p>
+                                {selectedImage && <Image width={400} height={400} src={URL.createObjectURL(selectedImage)} alt="document" />}
                             </div>
                         </div>
                         <div className="flex flex-col gap-4">
@@ -349,11 +400,16 @@ export default function Apply() {
                                 </div>
                                 <div>
                                     <p className="text-black/60">Loan Category</p>
-                                    <input
-                                        disabled
-                                        className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2"
-                                        value={renderValue("loanCategory")}
-                                    />
+                                    <select
+                                        className="rounded-md border-2 border-[#D9D9D9] p-2 ml-2"
+                                        name="loanCategory"
+                                        onChange={handleSelectChange}
+                                    >
+                                        <option>StartUp</option>
+                                        <option>Women and Children</option>
+                                        <option>Medical Expenses</option>
+                                        <option>Potential Borrowers</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className="grid grid-cols-2">
@@ -411,7 +467,7 @@ export default function Apply() {
                             <Button onClick={() => handleNextStep(2)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white">
                                 <ArrowLeft /> Edit
                             </Button>
-                            <Button className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right">
+                            <Button onClick={handleSubmit} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right">
                                 Submit <ArrowRight />
                             </Button>
                         </div>

@@ -32,7 +32,7 @@ const PostDescription = () => {
             const senderPublicKey = new PublicKey('6YiQzkm8ZWzdBuKYKuVukdXDRTfe2vT9tf2UBrhCWL8D');
             const receiverPublicKey = new PublicKey('2dU1GhDQLEy2rst4KjAdYgkc8RqsXH5hRoD8cUv4DSE9');
             const feePayerPublicKey = new PublicKey('6YiQzkm8ZWzdBuKYKuVukdXDRTfe2vT9tf2UBrhCWL8D'); // Specify fee payer's public key
-            const amount = 100; // Amount to transfer in lamports (e.g., 1 SOL = 1,000,000 lamports)
+            // const amount = 1000000; // Amount to transfer in lamports (e.g., 1 SOL = 1,000,000 lamports)
     
             // Create transaction
             const transaction = new Transaction({
@@ -42,7 +42,7 @@ const PostDescription = () => {
                 SystemProgram.transfer({
                     fromPubkey: senderPublicKey,
                     toPubkey: receiverPublicKey,
-                    lamports: amount,
+                    lamports: 10000,
                 })
             );
     
