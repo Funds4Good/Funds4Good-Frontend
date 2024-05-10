@@ -1,4 +1,4 @@
-import { Bookmark, Home } from "lucide-react";
+import { Bookmark, HandCoins, Home, LogOut, Plus, User, Wallet } from "lucide-react";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -9,9 +9,33 @@ export default function Navbar() {
       name: "Home"
     },
     {
+      icon: <Plus />,
+      name: "Apply"
+    },
+    {
+      icon: <HandCoins />,
+      name: "Applications"
+    },
+    {
       icon: <Bookmark />,
       name: "Bookmarks"
-    }
+    },
+    {
+      icon: <User />,
+      name: "Profile"
+    },
+    {
+      icon: <Bookmark />,
+      name: "Bookmarks"
+    },
+    {
+      icon: <Wallet />,
+      name: "Wallet"
+    },
+    {
+      icon: <LogOut />,
+      name: "Log Out"
+    },
   ]
 
   return (
