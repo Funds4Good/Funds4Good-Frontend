@@ -3,20 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image'
 import Post from './Post'
 import postImg from '../../public/post.svg';
-
-const ProgressBar = ({ progress }) => {
-    return (
-        <div className="w-full bg-gray-200 rounded-lg overflow-hidden">
-            <div
-                className="bg-[#51DA21] text-white py-3 text-center"
-                style={{ width: `${progress}%` }}
-            >
-
-            </div>
-        </div>
-    );
-};
-
+import ProgressBar from './ProgressBar';
 
 const Bookmark = () => {
     const [progress, setProgress] = useState(50);
