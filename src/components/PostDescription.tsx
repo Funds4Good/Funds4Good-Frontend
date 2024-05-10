@@ -1,7 +1,7 @@
 "use client"
+import React, { useState } from 'react';
 import { MoveLeft } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState } from 'react';
 import postImg from '../../public/post.svg';
 
 const ProgressBar = ({ progress }) => {
@@ -20,16 +20,15 @@ const PostDescription = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [userStoryClicked, setUserStoryClicked] = useState(false);
 
-    // Function to toggle options visibility and user story click state
     const toggleOptions = () => {
         setShowOptions(!showOptions);
-        setUserStoryClicked(prevState => !prevState); // Toggle the userStoryClicked state
+        setUserStoryClicked(prevState => !prevState); 
     };
 
     return (
         <div className="flex flex-col items-start justify-around p-8">
             <div
-                className={`flex gap-2 text-lg mb-6 cursor-pointer ${userStoryClicked ? 'text-[#4F46E5]' : ''}`}
+                className={"flex gap-2 text-lg mb-6 cursor-pointer "}
                 onClick={toggleOptions}
             >
                 <span><MoveLeft /></span>
@@ -42,7 +41,7 @@ const PostDescription = () => {
                     <p className="mb-4">Pay :</p>
                     <div className="mb-4">
                         <input
-                            type="text"
+                            type="number"
                             placeholder="Enter amount"
                             className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
                         />
@@ -58,8 +57,8 @@ const PostDescription = () => {
             </div>
 
             <div className="flex gap-6 mb-4">
-                <p className={`hover:text-[#4F46E5] ${userStoryClicked ? 'text-[#4F46E5]' : ''}`} onClick={toggleOptions}>Users Story</p>
-                <p className="hover:text-[#4F46E5]">Loan Detail</p>
+                <p className={`hover:text-[#4F46E5] cursor-pointer ${userStoryClicked ? 'text-[#4F46E5]' : ''}`} onClick={toggleOptions}>Users Story</p>
+                <p className="hover:text-[#4F46E5] cursor-pointer">Loan Detail</p>
             </div>
             {showOptions && (
                 <div>
