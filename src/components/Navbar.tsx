@@ -15,7 +15,7 @@ export default function Navbar() {
   ]
 
   return (
-    <div className="w-1/6 h-[100vh] fixed top-0 border-r-[#D9D9D9] border-2 py-8 px-4 bg-[#EEF1FF] flex flex-col gap-12">
+    <div className="w-full h-[100vh] sticky top-0 border-r-[#D9D9D9] border-2 py-8 px-4 bg-[#EEF1FF] flex flex-col gap-12">
       <div className="flex gap-2 items-center w-full mx-auto">
         <Image src={'/logo.png'} alt="logo" width={50} height={50} className="w-1/5" />
         <p className="text-2xl text-[#0000FF]">Funds4Good</p>
