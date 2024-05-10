@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
-import Image from 'next/image';
+import Image from 'next/image'
+import Post from './Post'
 import postImg from '../../public/post.svg';
 
 const ProgressBar = ({ progress }) => {
@@ -17,26 +18,10 @@ const ProgressBar = ({ progress }) => {
 };
 
 
-const Post = () => {
-
-    const navItems = [
-        { name: "All" },
-        { name: "Women and Children" },
-        { name: "Startup" },
-        { name: "Potential Borrowers" }
-    ];
-
+const Bookmark = () => {
     const [progress, setProgress] = useState(50);
-   
-
     return (
-        <div className="flex flex-col items-start justify-around gap-8 p-8">
-            <p className="text-2xl text-[#4F46E5]">Welcome Taru!</p>
-            <div className="flex items-start justify-between gap-6">
-                {navItems.map((item, index) => (
-                    <button key={index} className="rounded-full px-4 py-2 text-black hover:bg-[#4F46E5] hover:text-white">{item.name}</button>
-                ))}
-            </div>
+        <div className="flex flex-col items-start justify-around gap-8 p-8 "><div className="text-[#4F46E5] text-lg ">Bookmark</div>
             <div className="bg-white border border-gray-200 rounded-lg w-full shadow-md p-4 mb-4 flex flex-col justify-between">
                 <div className="flex items-center mb-4">
                     <Image
@@ -64,7 +49,8 @@ const Post = () => {
                 </div>
             </div>
         </div>
-    );
-};
 
-export default Post;
+    )
+}
+
+export default Bookmark
