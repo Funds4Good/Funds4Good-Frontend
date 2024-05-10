@@ -5,7 +5,7 @@ import MyApplications from '@/components/MyApplication';
 const page = () => {
   return (
     <div className="grid grid-cols-12">
-    <div className="col-span-2"><Navbar /></div>
+    <div className="col-span-2"><Navbar page='Applications' /></div>
     <div className="col-span-10"><MyApplications /></div>
   </div>
   )
