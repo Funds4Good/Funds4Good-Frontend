@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from "@/components/Navbar";
-import MyApplications from '@/components/myApplication';
+import MyApplications from '@/components/MyApplication';
 
 const page = () => {
   return (
