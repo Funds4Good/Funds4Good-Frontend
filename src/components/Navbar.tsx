@@ -25,10 +25,6 @@ export default function Navbar() {
       name: "Profile"
     },
     {
-      icon: <Bookmark />,
-      name: "Bookmarks"
-    },
-    {
       icon: <Wallet />,
       name: "Wallet"
     },
@@ -47,7 +43,7 @@ export default function Navbar() {
       <div className="flex flex-col gap-2 mx-4">
         {navItems.map((item) =>
           <div className="flex gap-4 w-9/10 cursor-pointer text-black/60 hover:bg-[#4F46E5] hover:text-white p-4 rounded-xl">
-            {item.icon}
+            <div>{item.icon}</div>
             <p>{item.name}</p>
           </div>
         )}
