@@ -36,7 +36,7 @@ export default function Appply() {
                     <div className={`w-1/4 border-2 border-gray-200 h-0 ${lineClasses(3)} `} />
                     <div className={`${stepClasses(3)} p-2 w-12 h-12 text-center text-lg rounded-full cursor-pointer border-white border-2`}>3</div>
                 </div>
-                <div className="flex flex-col gap-4">
+                {currentStep == 1 && <div className="flex flex-col gap-4">
                     <p className="font-semibold">Personal Details</p>
                     <div className="grid grid-cols-2">
                         <div>
@@ -71,9 +71,41 @@ export default function Appply() {
                         <Button className="rounded-md bg-[#4F46E5] w-1/4 p-2 text-white" > <ArrowUp /> Upload </Button>
                     </div>
                     <div className="w-full pr-12">
-                        <Button className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right" > Next <ArrowRight /></Button>
+                        <Button onClick={() => setCurrentStep(2)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right" > Next <ArrowRight /></Button>
                     </div>
-                </div>
+                </div>}
+                {currentStep == 2 && <div className="flex flex-col gap-4">
+                    <p className="font-semibold">Loan Details</p>
+                    <div className="grid grid-cols-2">
+                        <div>
+                            <p className="text-black/60">Loan Amount Needed</p>
+                            <input className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2" />
+                        </div>
+                        <div>
+                            <p className="text-black/60">Loan Category</p>
+                            <input className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2" />
+                        </div>
+                    </div>
+                    <div>
+                        <p className="text-black-60">Duration for which you need loan</p>
+                        <div className="flex w-1/2">
+                            <input className="rounded-md border-2 border-[#D9D9D9] w-1/2 p-2" />
+                            <select className="rounded-md border-2 border-[#D9D9D9] p-2 ml-2">
+                                <option>Days</option>
+                                <option>Months</option>
+                                <option>Years</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="text-black/60">Why you need this loan?</p>
+                        <textarea className="rounded-md border-2 border-[#D9D9D9] w-1/2 h-[25vh] resize-none p-2" />
+                    </div>
+                    <div className="w-full pr-12">
+                        <Button onClick={() => setCurrentStep(3)} className="rounded-xl bg-[#4F46E5] w-1/6 p-2 text-white float-right" > Next <ArrowRight /></Button>
+                    </div>
+                </div>}
             </div>
         </div>
     );
