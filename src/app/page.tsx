@@ -8,7 +8,6 @@ export default function Home() {
       <div className="col-span-2"><Navbar /></div>
       <div className="col-span-7"><Post /></div>
       <div className="col-span-3"><Stories /></div>
-
     </div>
   );
 }
