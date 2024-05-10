@@ -1,14 +1,60 @@
 "use client"
+
 import React, { useState } from 'react';
 import { MoveLeft } from 'lucide-react';
 import Image from 'next/image';
 import postImg from '../../public/post.svg';
+import { Transaction, SystemProgram, PublicKey, Connection } from '@solana/web3.js';
 
 const PostDescription = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [userStoryClicked, setUserStoryClicked] = useState(false);
     const [progress, setProgress] = useState(50);
 
+    // Function to initiate transaction with Phantom wallet
+    const lendWithPhantom = async () => {
+        if (!window.solana) {
+            alert('Phantom extension not found. Please install Phantom to use this feature.');
+            return;
+        }
+    
+        try {
+            // Connect to Phantom
+            await window.solana.connect();
+    
+            // Get connection to Solana network
+            const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
+    
+            // Get recent blockhash
+            const recentBlockhash = await connection.getRecentBlockhash();
+    
+            // Construct transaction
+            const senderPublicKey = new PublicKey('6YiQzkm8ZWzdBuKYKuVukdXDRTfe2vT9tf2UBrhCWL8D');
+            const receiverPublicKey = new PublicKey('2dU1GhDQLEy2rst4KjAdYgkc8RqsXH5hRoD8cUv4DSE9');
+            const feePayerPublicKey = new PublicKey('6YiQzkm8ZWzdBuKYKuVukdXDRTfe2vT9tf2UBrhCWL8D'); // Specify fee payer's public key
+            const amount = 100; // Amount to transfer in lamports (e.g., 1 SOL = 1,000,000 lamports)
+    
+            // Create transaction
+            const transaction = new Transaction({
+                recentBlockhash: recentBlockhash.blockhash,
+                feePayer: feePayerPublicKey, // Set the fee payer
+            }).add(
+                SystemProgram.transfer({
+                    fromPubkey: senderPublicKey,
+                    toPubkey: receiverPublicKey,
+                    lamports: amount,
+                })
+            );
+    
+            // Sign and send transaction
+            await window.solana.signAndSendTransaction(transaction);
+    
+            // Transaction successful
+            console.log('Transaction successful');
+        } catch (error) {
+            console.error('Error sending transaction: ', error);
+        }
+    };
     const toggleOptions = () => {
         setShowOptions(!showOptions);
         setUserStoryClicked(prevState => !prevState);
@@ -32,29 +78,10 @@ const PostDescription = () => {
                             className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
                         />
                     </div>
-                    <button className="text-center bg-[#4F46E5] text-white px-6 py-3 w-1/2 h-12 rounded-md mb-4">Lend</button>
+                    <button className="text-center bg-[#4F46E5] text-white px-6 py-3 w-1/2 h-12 rounded-md mb-4" onClick={lendWithPhantom}>Lend</button>
                 </div>
             </div>
-            <p className="font-bold">Message : <span className="font-light">Lorem ipsum dolor sit amet asgdja baskdbaks asdjkasd ansndkjasd andskjda andka</span></p>
-            <div className="flex items-start justify-between gap-6 mb-6">
-                <div>Raising: <span className="text-[#51DA21]">200$</span></div>
-                <div>Amount Left: <span className="text-[#51DA21]">200$</span></div>
-            </div>
-            <div className="w-full bg-gray-200 rounded-lg overflow-hidden h-6 mb-4">
-                <div className="bg-[#51DA21] text-white h-full" style={{ width: `${progress}%` }}></div>
-            </div>
-            <div className="flex gap-6 mb-4">
-                <p className={`hover:text-[#4F46E5] cursor-pointer ${userStoryClicked ? 'text-[#4F46E5]' : ''}`} onClick={toggleOptions}>Users Story</p>
-                <p className="hover:text-[#4F46E5] cursor-pointer">Loan Detail</p>
-            </div>
-            {showOptions && (
-                <div>
-                    <p>Name : <span className="text-[#808080]">Taru Pathak</span></p>
-                    <p>Occupation : <span className="text-[#808080]">Student</span></p>
-                    <p>Income :  <span className="text-[#808080]">0</span></p>
-                    <p>Bio :  <span className="text-[#808080]">Lorem Ipsum Dolor sit amet</span></p>
-                </div>
-            )}
+            {/* Rest of your component */}
         </div>
     );
 };
