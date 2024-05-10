@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/Button";
 import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
-import BaseUrl from "@/BaseUrl";
+import BaseUrl from "@/lib/BaseUrl";
+import Link from "next/link";
 export default function SignIn() {
 
     const [email, setEmail] = useState<string>("");
@@ -12,7 +13,7 @@ export default function SignIn() {
     function handleSubmit() {
         if (email && password) {
             setLoading(true);
-            BaseUrl.post("https://funds4good.pranavbisaria.live/api/auth/login", {
+            BaseUrl.post("api/auth/login", {
                 email: email,
                 password: password
             })
@@ -34,7 +35,9 @@ export default function SignIn() {
                     <div className="col-span-4 bg-signup bg-[#4F46E5] h-[75vh] w-full rounded-l-xl py-44 px-16 flex flex-col gap-12 text-white text-center">
                         <p className="text-3xl font-extrabold">Greetings!</p>
                         <p className="font-thin">To keep connected with us plase sign up if you are new!</p>
-                        <Button className="text-white w-1/2 p-4 mx-auto rounded-full border-2 border-white">Sign Up</Button>
+                        <Link href={"/signup"}>
+                            <Button className="text-white w-1/2 p-4 mx-auto rounded-full border-2 border-white">Sign Up</Button>
+                        </Link>
                     </div>
                     <div className="col-span-6 p-24">
                         <p className="text-3xl font-extrabold text-[#4F46E5] text-center">Sign In</p>
