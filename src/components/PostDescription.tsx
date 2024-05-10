@@ -4,33 +4,19 @@ import { MoveLeft } from 'lucide-react';
 import Image from 'next/image';
 import postImg from '../../public/post.svg';
 
-const ProgressBar = ({ progress }) => {
-    return (
-        <div className="w-full bg-gray-200 rounded-lg overflow-hidden">
-            <div
-                className="bg-[#51DA21] text-white py-3 text-center"
-                style={{ width: `${progress}%` }}
-            ></div>
-        </div>
-    );
-};
-
 const PostDescription = () => {
-    const [progress, setProgress] = useState(50);
     const [showOptions, setShowOptions] = useState(false);
     const [userStoryClicked, setUserStoryClicked] = useState(false);
+    const [progress, setProgress] = useState(50);
 
     const toggleOptions = () => {
         setShowOptions(!showOptions);
-        setUserStoryClicked(prevState => !prevState); 
+        setUserStoryClicked(prevState => !prevState);
     };
 
     return (
         <div className="flex flex-col items-start justify-around p-8">
-            <div
-                className={"flex gap-2 text-lg mb-6 cursor-pointer "}
-                onClick={toggleOptions}
-            >
+            <div className="flex gap-2 text-lg mb-6 cursor-pointer ">
                 <span><MoveLeft /></span>
                 <span>Users Story</span>
             </div>
@@ -50,12 +36,13 @@ const PostDescription = () => {
                 </div>
             </div>
             <p className="font-bold">Message : <span className="font-light">Lorem ipsum dolor sit amet asgdja baskdbaks asdjkasd ansndkjasd andskjda andka</span></p>
-            <div className="mb-6"> <ProgressBar progress={progress} /></div>
             <div className="flex items-start justify-between gap-6 mb-6">
                 <div>Raising: <span className="text-[#51DA21]">200$</span></div>
                 <div>Amount Left: <span className="text-[#51DA21]">200$</span></div>
             </div>
-
+            <div className="w-full bg-gray-200 rounded-lg overflow-hidden h-6 mb-4">
+                <div className="bg-[#51DA21] text-white h-full" style={{ width: `${progress}%` }}></div>
+            </div>
             <div className="flex gap-6 mb-4">
                 <p className={`hover:text-[#4F46E5] cursor-pointer ${userStoryClicked ? 'text-[#4F46E5]' : ''}`} onClick={toggleOptions}>Users Story</p>
                 <p className="hover:text-[#4F46E5] cursor-pointer">Loan Detail</p>
