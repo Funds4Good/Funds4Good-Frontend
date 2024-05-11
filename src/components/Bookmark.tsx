@@ -37,12 +37,13 @@ const Bookmark = () => {
             console.error("Access token not found. User not authenticated.");
             return;
         }
-
-        BaseUrl.get("/api/loans/getBookMarks", {
+        const config = {
             headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+                "Authorization": `Bearer ${token}`,
+            },
+        };
+
+        BaseUrl.get("/api/loans/getBookMarks", config)
             .then((response) => {
                 if (response.status === 200) {
                     setPosts(response.data); 
