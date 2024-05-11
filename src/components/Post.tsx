@@ -7,6 +7,8 @@ import BaseUrl from '@/lib/BaseUrl';
 import { Bookmark as BookmarkIcon } from 'lucide-react';
 import { Button } from './ui/Button';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Post {
     loanRequestId: string;
@@ -27,6 +29,8 @@ interface Post {
     userId: string;
     raising: number;
     createdAt: string;
+    bookMarked : boolean;
+    receiverId: string
 }
 
 const Post = () => {
@@ -49,9 +53,15 @@ const Post = () => {
             console.error("Access token not found. User not authenticated.");
             return;
         }
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        };
 
-        BaseUrl.get("/api/loans/getAll")
+        BaseUrl.get("/api/loans/getAll",config)
             .then((response) => {
+                console.log(response.data)
                 if (response.status === 200) {
                     setPosts(response.data)
                 } else {
@@ -80,7 +90,7 @@ const Post = () => {
             });
 
             if (response.status === 200) {
-                console.log("Post bookmarked successfully");
+                toast.success("Bookmark Toggled successfully");
                 // Optionally, you can update the state to reflect the changes in real-time
             } else {
                 throw new Error("Failed to bookmark post");
@@ -102,7 +112,8 @@ const Post = () => {
                 <div key={index} className="bg-white border border-gray-200 rounded-lg w-full shadow-md p-4 mb-4 flex flex-col justify-between">
                     <div className="flex items-center mb-4 justify-between">
                         <span className="text-black font-bold">{post.name}</span>
-                        <BookmarkIcon onClick={() => handleBookmark(post.loanRequestId)} className='cursor-pointer' />
+                        <p>{post.bookMarked}</p>
+                        {post.bookMarked ?<BookmarkIcon fill='black' onClick={() => handleBookmark(post.loanRequestId)} className='cursor-pointer' /> :<BookmarkIcon onClick={() => handleBookmark(post.loanRequestId)} className='cursor-pointer' />}
                     </div>
                     <p className="text-gray-800 mb-4">{post.loanDescription}</p>
                     <Image src={`https://funds4good.pranavbisaria.live${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={600} height={400}/>
@@ -119,6 +130,7 @@ const Post = () => {
                         <Button onClick={()=>{ router.push("postDescription"); localStorage.setItem("requestid",post.loanRequestId) }} className="text-center border-2 border-[#D9D9D9] text-black px-6 py-3 w-1/2 h-12 rounded-md">Read More</Button>
                         <Button onClick={()=>{ router.push("postDescription"); localStorage.setItem("requestid",post.loanRequestId) }} className="text-center bg-[#4F46E5] text-white px-6 py-3 w-1/2 h-12 rounded-md">Support</Button>
                     </div>
+                    <ToastContainer />
                 </div>
             ))}
         </div>

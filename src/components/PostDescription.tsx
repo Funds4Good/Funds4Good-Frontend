@@ -28,6 +28,7 @@ interface Post {
     userId: string;
     raising: number;
     createdAt: string;
+    bookMarked : boolean;
     receiverId: string
 }
 const PostDescription = () => {
