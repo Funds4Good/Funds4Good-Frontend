@@ -6,8 +6,10 @@ import BaseUrl from "@/lib/BaseUrl";
 import classNames from "classnames";
 import { ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Define the type for form data
 type FormData = {
     name: string;
@@ -36,8 +38,9 @@ export default function Apply() {
             setSelectedImage(file);
         }
     };
+    const router = useRouter()
     // State object to hold values of all fields
-    const [formData, setFormData] = useState<FormData>({
+    const defaultFormData = {
         name: "",
         zipcode: "",
         bio: "",
@@ -52,7 +55,8 @@ export default function Apply() {
         emiRepetition: "",
         loanPurpose: "",
         idDetails: "Adhaar"
-    });
+    }
+    const [formData, setFormData] = useState<FormData>(defaultFormData);
 
     function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = event.target;
@@ -97,27 +101,38 @@ export default function Apply() {
     }
 
     function handleSubmit() {
-        var accesstoken = localStorage.getItem("accesstoken");
+        const token = localStorage.getItem("accessToken");
+
+        if (!token) {
+            console.error("Access token not found. User not authenticated.");
+            return;
+        }
         const config = {
             headers: {
-                Authorization: `Bearer ${accesstoken}`,
+                "Authorization": `Bearer ${token}`,
             },
         };
 
+        
         const formDataJson = JSON.stringify(formData);
-
+        
         const object = new FormData();
         object.append("loanRequest", formDataJson);
-
+        
         if (selectedImage !== null) {
             object.append("image", selectedImage);
         }
-
+        
         BaseUrl.post("api/loans/apply", object, config)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((err) => {
+        .then((res) => {
+            console.log(res)
+            if(res.status==200){
+                toast.success("applied successfully")
+                setFormData(defaultFormData)
+                setCurrentStep(1)
+            }
+        })
+        .catch((err) => {
                 console.log(err)
             })
     }
@@ -474,6 +489,7 @@ export default function Apply() {
                     </div>
                 )}
             </div>
+            <ToastContainer />
         </div>
     );
 }

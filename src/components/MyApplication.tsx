@@ -76,7 +76,7 @@ const MyApplications = () => {
                         <span className="text-black">{application.name}</span>
                     </div>
                     <p className="text-gray-800 mb-4">{application.loanDescription}</p>
-                    <Image src={"https://7d01-103-124-175-226.ngrok-free.app" + application.imageUploaded} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800} />
+                    <Image src={"https://funds4good.pranavbisaria.live" + application.imageUploaded} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800} />
                     <div className="flex items-start gap-6 mb-6">
                         <div>Amount: <span className="text-[#808080]">{application.loanAmount}</span></div>
                         <div>Type: <span className="text-[#808080]">{application.loanCategory}</span></div>

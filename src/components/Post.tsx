@@ -78,12 +78,14 @@ const Post = () => {
                             src={""}
                             alt="Profile"
                             className="w-8 h-8 rounded-full mr-2"
+                            width={50}
+                            height={50}
                         />
                         <span className="text-black">{post.name}</span>
                         <Bookmark />
                     </div>
                     <p className="text-gray-800 mb-4">{post.loanDescription}</p>
-                    <Image src={"https://7d01-103-124-175-226.ngrok-free.app"+`${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800}/>
+                    <Image src={"https://funds4good.pranavbisaria.live"+`${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={600} height={400}/>
                     <div className="flex items-start gap-6 mb-6">
                         <div>Amount: <span className="text-[#808080]">{post.loanAmount}</span></div>
                         <div>Type: <span className="text-[#808080]">{post.loanCategory}</span></div>
