@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -78,9 +78,7 @@ const Post = () => {
 
             if (response.status === 200) {
                 console.log("Post bookmarked successfully");
-                // Optionally, update the state to reflect the changes in real-time
-                // For example:
-                // setPosts([...posts, response.data]); // Append the bookmarked post to the existing posts array
+                // Optionally, you can update the state to reflect the changes in real-time
             } else {
                 throw new Error("Failed to bookmark post");
             }
@@ -88,7 +86,6 @@ const Post = () => {
             console.error("Error bookmarking post:", error);
         }
     };
-
 
     return (
         <div className="flex flex-col items-start justify-around gap-8 p-8">
@@ -113,8 +110,7 @@ const Post = () => {
                     </div>
                     <div className="mb-6"> <ProgressBar progress={progress} /></div>
                     <div className="flex items-start justify-between gap-6 mb-6">
-                        <div>Raising: <span className="text-[#51DA21]">{post.raising}</span></div>
-                        {/* Add more loan details if necessary */}
+                        <div>Raising: <span className="text-[#51DA21]">{post.loanAmount}</span></div>
                     </div>
                     <div className="flex items-start gap-4 justify-around">
                         <a href="/postDescription" className="text-center border-2 border-[#D9D9D9] text-black px-6 py-3 w-1/2 h-12 rounded-md">Read More</a>
