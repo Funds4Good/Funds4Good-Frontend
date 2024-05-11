@@ -5,6 +5,8 @@ import Image from 'next/image';
 import ProgressBar from './ProgressBar';
 import BaseUrl from '@/lib/BaseUrl';
 import { Bookmark as BookmarkIcon } from 'lucide-react';
+import { Button } from './ui/Button';
+import { useRouter } from 'next/navigation';
 
 interface Post {
     loanRequestId: string;
@@ -34,6 +36,7 @@ const Post = () => {
         { name: "Startup" },
         { name: "Potential Borrowers" }
     ];
+    const router = useRouter()
 
     const [progress, setProgress] = useState(50);
     const [name, setName] = useState<string | null>(null);
@@ -102,7 +105,7 @@ const Post = () => {
                         <BookmarkIcon onClick={() => handleBookmark(post.loanRequestId)} className='cursor-pointer' />
                     </div>
                     <p className="text-gray-800 mb-4">{post.loanDescription}</p>
-                    <Image src={"https://funds4good.pranavbisaria.live" + `${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800} />
+                    <Image src={`https://funds4good.pranavbisaria.live${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={600} height={400}/>
                     <div className="flex items-start gap-6 mb-6">
                         <div>Amount: <span className="text-[#808080]">{post.loanAmount}</span></div>
                         <div>Type: <span className="text-[#808080]">{post.loanCategory}</span></div>
@@ -113,8 +116,8 @@ const Post = () => {
                         <div>Raising: <span className="text-[#51DA21]">{post.loanAmount}</span></div>
                     </div>
                     <div className="flex items-start gap-4 justify-around">
-                        <a href="/postDescription" className="text-center border-2 border-[#D9D9D9] text-black px-6 py-3 w-1/2 h-12 rounded-md">Read More</a>
-                        <a href="/postDescription" className="text-center bg-[#4F46E5] text-white px-6 py-3 w-1/2 h-12 rounded-md">Support</a>
+                        <Button onClick={()=>{ router.push("postDescription"); localStorage.setItem("requestid",post.loanRequestId) }} className="text-center border-2 border-[#D9D9D9] text-black px-6 py-3 w-1/2 h-12 rounded-md">Read More</Button>
+                        <Button onClick={()=>{ router.push("postDescription"); localStorage.setItem("requestid",post.loanRequestId) }} className="text-center bg-[#4F46E5] text-white px-6 py-3 w-1/2 h-12 rounded-md">Support</Button>
                     </div>
                 </div>
             ))}

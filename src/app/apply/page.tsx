@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// Define the type for form data
+
 type FormData = {
     name: string;
     zipcode: string;
@@ -25,7 +25,8 @@ type FormData = {
     repaymentStartDate: string;
     emiRepetition: string;
     loanPurpose: string;
-    idDetails: string
+    idDetails: string;
+    receiverId: string;
 }
 
 export default function Apply() {
@@ -39,6 +40,7 @@ export default function Apply() {
         }
     };
     const router = useRouter()
+    const pubKey = localStorage.getItem("pubKey") || ""
     // State object to hold values of all fields
     const defaultFormData = {
         name: "",
@@ -54,7 +56,8 @@ export default function Apply() {
         repaymentStartDate: "",
         emiRepetition: "",
         loanPurpose: "",
-        idDetails: "Adhaar"
+        idDetails: "Adhaar",
+        receiverId: pubKey
     }
     const [formData, setFormData] = useState<FormData>(defaultFormData);
 
