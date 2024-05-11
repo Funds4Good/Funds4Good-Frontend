@@ -6,7 +6,6 @@ import BaseUrl from "@/lib/BaseUrl";
 import classNames from "classnames";
 import { ArrowLeft, ArrowRight, ArrowUp } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,8 +38,7 @@ export default function Apply() {
             setSelectedImage(file);
         }
     };
-    const router = useRouter()
-    const pubKey = localStorage.getItem("pubKey") || ""
+    const pubKey = typeof localStorage !== 'undefined' ? localStorage.getItem("pubKey") || "" : ""
     // State object to hold values of all fields
     const defaultFormData = {
         name: "",
@@ -104,7 +102,7 @@ export default function Apply() {
     }
 
     function handleSubmit() {
-        const token = localStorage.getItem("accessToken");
+        const token = typeof localStorage !== 'undefined' ? localStorage.getItem("accessToken") : "";
 
         if (!token) {
             console.error("Access token not found. User not authenticated.");
@@ -115,7 +113,6 @@ export default function Apply() {
                 "Authorization": `Bearer ${token}`,
             },
         };
-
         
         const formDataJson = JSON.stringify(formData);
         
@@ -133,6 +130,7 @@ export default function Apply() {
                 toast.success("applied successfully")
                 setFormData(defaultFormData)
                 setCurrentStep(1)
+                setSelectedImage(null)
             }
         })
         .catch((err) => {
