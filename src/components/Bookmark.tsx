@@ -72,7 +72,7 @@ const Bookmark = () => {
                         <span className="text-black">{post.name}</span>
                     </div>
                     <p className="text-gray-800 mb-4">{post.loanDescription}</p>
-                    <Image src={post.imageUploaded} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800}/>
+                    <Image src={"https://funds4good.pranavbisaria.live" + post.imageUploaded} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800}/>
                     <div className="flex items-start gap-6 mb-6">
                         <div>Amount: <span className="text-[#808080]">{post.loanAmount}</span></div>
                         <div>Type: <span className="text-[#808080]">{post.loanCategory}</span></div>

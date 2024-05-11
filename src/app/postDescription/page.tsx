@@ -1,8 +1,13 @@
+"use client"
+
 import React from 'react'
 import Navbar from "@/components/Navbar";
 import PostDescription from '@/components/PostDescription';
+// import { useLocation } from 'react-router-dom';
 
-const page = () => {
+const page: React.FC = () => {
+  // const location = useLocation();
+  // const { state: { post } } = location;
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-2"><Navbar page='Home' /></div>
@@ -11,4 +16,4 @@ const page = () => {
   )
 }
 
-export default page
+export default page;
