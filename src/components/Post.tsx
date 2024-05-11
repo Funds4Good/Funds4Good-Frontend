@@ -71,7 +71,7 @@ const Post = () => {
                     <button key={index} className="rounded-full px-4 py-2 text-black border-2 border-gray-300 hover:bg-[#4F46E5] hover:text-white">{item.name}</button>
                 ))}
             </div>
-            {posts.map((post, index) => (
+            {posts && Array.isArray(posts) && posts.length>0 && posts.map((post, index) => (
                 <div key={index} className="bg-white border border-gray-200 rounded-lg w-full shadow-md p-4 mb-4 flex flex-col justify-between">
                     <div className="flex items-center mb-4">
                         <Image
@@ -83,7 +83,7 @@ const Post = () => {
                         <Bookmark />
                     </div>
                     <p className="text-gray-800 mb-4">{post.loanDescription}</p>
-                    <Image src={"https://funds4good.pranavbisaria.live"+`${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800}/>
+                    <Image src={"https://7d01-103-124-175-226.ngrok-free.app"+`${post.imageUploaded}`} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800}/>
                     <div className="flex items-start gap-6 mb-6">
                         <div>Amount: <span className="text-[#808080]">{post.loanAmount}</span></div>
                         <div>Type: <span className="text-[#808080]">{post.loanCategory}</span></div>
