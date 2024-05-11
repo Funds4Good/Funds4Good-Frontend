@@ -65,24 +65,20 @@ const Bookmark = () => {
             {posts.map((post, index) => (
                 <div key={index} className="bg-white border border-gray-200 rounded-lg w-full shadow-md p-4 mb-4 flex flex-col justify-between">
                     <div className="flex items-center mb-4">
-                        <Image
-                            src=""
-                            alt="Profile"
-                            className="w-8 h-8 rounded-full mr-2"
-                        />
-                        <span className="text-black">{post.name}</span>
+                        
+                        <span className="text-black font-bold">{post.name}</span>
                     </div>
                     <p className="text-gray-800 mb-4">{post.loanDescription}</p>
                     <Image src={"https://funds4good.pranavbisaria.live" + post.imageUploaded} alt="Post" className="w-full mb-4 rounded-lg" width={1200} height={800}/>
                     <div className="flex items-start gap-6 mb-6">
                         <div>Amount: <span className="text-[#808080]">{post.loanAmount}</span></div>
                         <div>Type: <span className="text-[#808080]">{post.loanCategory}</span></div>
-                        <div>Duration: <span className="text-[#808080]">{post.timeDuration}</span></div>
+                        <div>Duration: <span className="text-[#808080]">{post.repaymentStartDate}</span></div>
                     </div>
                     <div className="mb-6"> <ProgressBar progress={progress} /></div>
                     <div className="flex items-start justify-between gap-6 mb-6">
-                        <div>Raising: <span className="text-[#51DA21]">{post.raising}</span></div>
-                        <div>Amount Left: <span className="text-[#51DA21]">{post.loanAmount - post.raising}</span></div>
+                        <div>Raising: <span className="text-[#51DA21]">{post.loanAmount}</span></div>
+                        
                     </div>
                     <div className="flex items-start gap-4 justify-around">
                         <a href="/postDescription" className="text-center border-2 border-[#D9D9D9] text-black px-6 py-3 w-1/2 h-12 rounded-md">Read More</a>
